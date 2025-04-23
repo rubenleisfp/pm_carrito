@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -74,7 +76,7 @@ fun CarritoScreen(
 ) {
 
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.background(Color.White).padding(16.dp)) {
         Text("Carrito de Compras", style = MaterialTheme.typography.headlineMedium)
 
         OutlinedTextField(
@@ -122,21 +124,24 @@ fun CarritoScreen(
     }
 }
 
-@Preview(showBackground = true)
+
+@Preview
 @Composable
-fun PreviewCarritoApp() {
-    val fakeViewModel = CarritoViewModel().apply {
-        // Simulamos algunos datos para el preview
-        agregarProductoDesdeCamposFake("Pan", "1.0")
-        agregarProductoDesdeCamposFake("Leche", "1.5")
-    }
-
-    CarritoApp(carritoViewModel = fakeViewModel)
+fun CarritoScreenPreview() {
+    CarritoScreen(
+        nombre = "",
+        precio = "",
+        uiState = CarritoState(
+            productos = listOf(
+                Producto("Pan", 1.0),
+                Producto("Leche", 1.5)
+            ),
+            total = 2.5
+        ),
+        onNombreChanged = {},
+        onPrecioChanged = {},
+        onAgregarProducto = {},
+        onEliminarProducto = {}
+    )
 }
 
-// Función auxiliar para preview (no se usará en producción)
-private fun CarritoViewModel.agregarProductoDesdeCamposFake(nombre: String, precio: String) {
-    onNombreChanged(nombre)
-    onPrecioChanged(precio)
-    agregarProductoDesdeCampos()
-}

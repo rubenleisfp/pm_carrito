@@ -24,30 +24,14 @@ class CarritoViewModel : ViewModel() {
     }
 
     fun agregarProductoDesdeCampos() {
-        val nombreActual = _nombre.value
-        val precioActual = _precio.value.toDoubleOrNull() ?: 0.0
-        val nuevoProducto = Producto(nombreActual, precioActual)
-
-        val nuevaLista = _uiState.value.productos + nuevoProducto
-        val nuevoTotal = calcularTotal(nuevaLista)
-        _uiState.value = _uiState.value.copy(productos = nuevaLista, total = nuevoTotal)
-
-        _nombre.value = ""
-        _precio.value = ""
+        throw UnsupportedOperationException("A implementar por el alumno")
     }
 
     fun eliminarProducto(producto: Producto) {
-        val nuevaLista = _uiState.value.productos.toMutableList()
-        nuevaLista.remove(producto)
-        val nuevoTotal = calcularTotal(nuevaLista)
-        _uiState.value = _uiState.value.copy(productos = nuevaLista, total = nuevoTotal)
+        throw UnsupportedOperationException("A implementar por el alumno")
     }
 
     private fun calcularTotal(lista: List<Producto>): Double {
-        var suma = 0.0
-        for (p in lista) {
-            suma += p.precio
-        }
-        return suma
+        throw UnsupportedOperationException("A implementar por el alumno")
     }
 }

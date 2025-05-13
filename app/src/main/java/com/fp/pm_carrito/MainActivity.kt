@@ -49,14 +49,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CarritoApp(carritoViewModel: CarritoViewModel) {
-    val nombre by carritoViewModel.nombre.collectAsState()
-    val precio by carritoViewModel.precio.collectAsState()
-    val uiState by carritoViewModel.uiState.collectAsState()
+    val carritoState by carritoViewModel.uiState.collectAsState()
 
     CarritoScreen(
-        nombre = nombre,
-        precio = precio,
-        uiState = uiState,
+        carritoState = carritoState,
         onNombreChanged = { name -> carritoViewModel.onNombreChanged(name) },
         onPrecioChanged = { price -> carritoViewModel.onPrecioChanged(price) },
         onAgregarProducto = { carritoViewModel.agregarProductoDesdeCampos()},
@@ -66,9 +62,7 @@ fun CarritoApp(carritoViewModel: CarritoViewModel) {
 
 @Composable
 fun CarritoScreen(
-    nombre: String,
-    precio: String,
-    uiState: CarritoState,
+    carritoState: CarritoState,
     onNombreChanged: (String) -> Unit,
     onPrecioChanged: (String) -> Unit,
     onAgregarProducto: () -> Unit,
@@ -76,17 +70,17 @@ fun CarritoScreen(
 ) {
 
 
-    Column(modifier = Modifier.background(Color.White).padding(16.dp)) {
+    Column(modifier = Modifier.background(Color.White).padding(36.dp)) {
         Text("Carrito de Compras", style = MaterialTheme.typography.headlineMedium)
 
         OutlinedTextField(
-            value = nombre,
+            value = carritoState.nombre,
             onValueChange = { valor -> onNombreChanged(valor) },
             label = { Text("Nombre del producto") }
         )
 
         OutlinedTextField(
-            value = precio,
+            value = carritoState.precio,
             onValueChange = { valor -> onPrecioChanged(valor) },
             label = { Text("Precio") },
             modifier = Modifier.padding(top = 8.dp)
@@ -104,7 +98,7 @@ fun CarritoScreen(
         Text("Productos en el carrito:")
 
         LazyColumn {
-            items(uiState.productos) { producto ->
+            items(carritoState.productos) { producto ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -120,7 +114,7 @@ fun CarritoScreen(
         }
 
         Spacer(Modifier.height(16.dp))
-        Text("Total: ${uiState.total} €")
+        Text("Total: ${carritoState.total} €")
     }
 }
 
@@ -129,9 +123,7 @@ fun CarritoScreen(
 @Composable
 fun CarritoScreenPreview() {
     CarritoScreen(
-        nombre = "",
-        precio = "",
-        uiState = CarritoState(
+        carritoState = CarritoState(
             productos = listOf(
                 Producto("Pan", 1.0),
                 Producto("Leche", 1.5)

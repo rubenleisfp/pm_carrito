@@ -6,34 +6,28 @@ import kotlinx.coroutines.flow.StateFlow
 
 class CarritoViewModel : ViewModel() {
 
-    private val _nombre = MutableStateFlow("")
-    val nombre: StateFlow<String> = _nombre
-
-    private val _precio = MutableStateFlow("")
-    val precio: StateFlow<String> = _precio
-
     private val _uiState = MutableStateFlow(CarritoState())
     val uiState: StateFlow<CarritoState> = _uiState
 
-    fun onNombreChanged(nuevo: String) {
-        _nombre.value = nuevo
+    fun onNombreChanged(nuevoNombre: String) {
+        _uiState.value= _uiState.value.copy(nombre = nuevoNombre)
     }
 
-    fun onPrecioChanged(nuevo: String) {
-        _precio.value = nuevo
+    fun onPrecioChanged(nuevoPrecio: String) {
+        _uiState.value= _uiState.value.copy(precio = nuevoPrecio)
     }
 
     fun agregarProductoDesdeCampos() {
-        val nombreActual = _nombre.value
-        val precioActual = _precio.value.toDoubleOrNull() ?: 0.0
+        val nombreActual = _uiState.value.nombre
+        val precioActual = _uiState.value.precio.toDoubleOrNull() ?: 0.0
         val nuevoProducto = Producto(nombreActual, precioActual)
 
         val nuevaLista = _uiState.value.productos + nuevoProducto
         val nuevoTotal = calcularTotal(nuevaLista)
         _uiState.value = _uiState.value.copy(productos = nuevaLista, total = nuevoTotal)
 
-        _nombre.value = ""
-        _precio.value = ""
+        _uiState.value= _uiState.value.copy(nombre = "")
+        _uiState.value= _uiState.value.copy(precio = "")
     }
 
     fun eliminarProducto(producto: Producto) {

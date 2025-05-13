@@ -68,54 +68,7 @@ fun CarritoScreen(
     onAgregarProducto: () -> Unit,
     onEliminarProducto:(Producto) -> Unit
 ) {
-
-
-    Column(modifier = Modifier.background(Color.White).padding(36.dp)) {
-        Text("Carrito de Compras", style = MaterialTheme.typography.headlineMedium)
-
-        OutlinedTextField(
-            value = carritoState.nombre,
-            onValueChange = { valor -> onNombreChanged(valor) },
-            label = { Text("Nombre del producto") }
-        )
-
-        OutlinedTextField(
-            value = carritoState.precio,
-            onValueChange = { valor -> onPrecioChanged(valor) },
-            label = { Text("Precio") },
-            modifier = Modifier.padding(top = 8.dp)
-        )
-
-        Button(
-            onClick = onAgregarProducto,
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Text("Agregar")
-        }
-
-        Spacer(Modifier.height(16.dp))
-
-        Text("Productos en el carrito:")
-
-        LazyColumn {
-            items(carritoState.productos) { producto ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text("${producto.nombre} - ${producto.precio}€")
-                    Button(onClick = { onEliminarProducto(producto) }) {
-                        Text("Eliminar")
-                    }
-                }
-            }
-        }
-
-        Spacer(Modifier.height(16.dp))
-        Text("Total: ${carritoState.total} €")
-    }
+    Text("A implementar por el alumno")
 }
 
 

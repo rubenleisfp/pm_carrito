@@ -3,11 +3,12 @@ import com.fp.pm_carrito.vm.state.CarritoState
 import com.fp.pm_carrito.vm.state.Producto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CarritoViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(CarritoState())
-    val uiState: StateFlow<CarritoState> = _uiState
+    val uiState: StateFlow<CarritoState> = _uiState.asStateFlow()
 
     fun onNombreChanged(nuevoNombre: String) {
         _uiState.value= _uiState.value.copy(nombre = nuevoNombre)
